@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "freemius-blocks/buy-button",
+  "icon": "lock",
+  "version": "0.5.0",
+  "title": "Freemius Buy Button",
+  "category": "widgets",
+  "description": "Add a Freemius buy button",
+  "keywords": [
+    "Freemius"
+  ],
+  "supports": {
+    "html": false,
+    "customClassName": false
+  },
+  "attributes": {
+    "public_key": {
+      "type": "string",
+      "default": 0
+    },
+    "plugin_id": {
+      "type": "string",
+      "default": 0
+    },
+    "plan_id": {
+      "type": "string",
+      "default": 0
+    },
+    "buttonLabel": {
+      "type": "string"
+    }
+  },
+  "textdomain": "freemius-blocks",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.scss",
+  "style": "file:./style.scss"
+}
