@@ -1,13 +1,13 @@
 import './editor.scss';
 import {InspectorControls, useBlockProps} from "@wordpress/block-editor";
-import {Button, PanelBody, TextControl} from "@wordpress/components";
+import {Button, PanelBody, SelectControl, TextControl} from "@wordpress/components";
 import {useEffect} from "@wordpress/element";
 
 const {__} = wp.i18n;
 
 export default function Edit({attributes, setAttributes}) {
     const blockProps = useBlockProps();
-    const {public_key, plugin_id, plan_id, buttonLabel} = attributes;
+    const {public_key, plugin_id, plan_id, billing_cycle, buttonLabel} = attributes;
 
     const onChangePublicKey = (newPublicKey) => {
         setAttributes({public_key: newPublicKey});
@@ -19,6 +19,10 @@ export default function Edit({attributes, setAttributes}) {
 
     const onChangePlanId = (newPlanId) => {
         setAttributes({plan_id: newPlanId});
+    };
+
+    const onChangeBillingCycle = (newBillingCycle) => {
+        setAttributes({billing_cycle: newBillingCycle});
     };
 
     const onChangeButtonLabel = (newButtonLabel) => {
@@ -58,6 +62,16 @@ export default function Edit({attributes, setAttributes}) {
                         value={plan_id}
                         id="freemius-plan-id"
                     />
+                    <SelectControl
+                        label={__('Billing Cycle', 'freemius-blocks')}
+                        value={billing_cycle}
+                        options={[
+                            {label: 'Annual', value: 'annual'},
+                            {label: 'Monthly', value: 'monthly'},
+                            {label: 'Lifetime', value: 'lifetime'},
+                        ]}
+                        onChange={onChangeBillingCycle}
+                    />
                     <TextControl
                         {...blockProps}
                         label={__('Button Label', 'freemius-blocks')}
@@ -68,9 +82,15 @@ export default function Edit({attributes, setAttributes}) {
                 </PanelBody>
             </InspectorControls>
             <div {...useBlockProps()}>
-                <Button variant="primary" id={`ps-${plugin_id}--${plan_id}`} className="freemius-buy-button">
-                    {buttonLabel}
-                </Button>
+                {plugin_id && plan_id && billing_cycle && public_key ?
+                    <Button variant="primary" id={`ps-${plugin_id}-${plan_id}-${billing_cycle}`} className="freemius-buy-button">
+                        {buttonLabel}
+                    </Button>
+                    :
+                    <Button variant="primary" className="freemius-buy-button">
+                        {buttonLabel}
+                    </Button>
+                }
             </div>
         </>
     );

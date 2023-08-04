@@ -16,16 +16,16 @@
   },
   "attributes": {
     "public_key": {
-      "type": "string",
-      "default": 0
+      "type": "string"
     },
     "plugin_id": {
-      "type": "string",
-      "default": 0
+      "type": "string"
     },
     "plan_id": {
-      "type": "string",
-      "default": 0
+      "type": "string"
+    },
+    "billing_cycle": {
+      "type": "string"
     },
     "buttonLabel": {
       "type": "string"
