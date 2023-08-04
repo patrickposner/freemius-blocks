@@ -38,7 +38,7 @@ export default function Edit({attributes, setAttributes}) {
     return (
         <>
             <InspectorControls>
-                <PanelBody title={__('SDK Settings', 'content-protector')} initialOpen={true}>
+                <PanelBody title={__('SDK Settings', 'freemius-blocks')} initialOpen={true}>
                     <TextControl
                         {...blockProps}
                         label={__('Public Key', 'freemius-blocks')}

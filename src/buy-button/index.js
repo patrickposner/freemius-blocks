@@ -1,14 +1,13 @@
 import {getBlockType, registerBlockType} from '@wordpress/blocks';
-import metadata from './block.json';
+import './style.scss';
 
-import Edit from './Edit';
+import Edit from './edit';
+import save from './save';
+import metadata from './block.json';
 
 if (!getBlockType('freemius-blocks/buy-button')) {
     registerBlockType(metadata.name, {
-        title: "Freemius Buy Button",
         edit: Edit,
-        save() {
-            return null;
-        },
+        save,
     });
 }
