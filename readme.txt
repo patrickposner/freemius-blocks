@@ -2,12 +2,16 @@
 Contributors: patrickposner
 Tags: Gutenberg, Blocks
 Requires at least: 6.2
-Tested up to: 6.2
+Tested up to: 6.3
 Stable tag: 0.5
 
 == Description ==
 
-Freemius Blocks - a collection of blocks to add Freemius to your website
+Freemius Blocks - a collection of blocks to add Freemius to your website.
+
+Add your Freemius Public Key as a constant iny our wp-config.php file and start using the blocks:
+
+define('FSP_PUBLIC_KEY', 'pk_XXX');
 
 == Installation ==
 

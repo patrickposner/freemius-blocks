@@ -79,6 +79,10 @@ class Blocks {
 		wp_enqueue_script( 'buy-button-script', FBP_URL . '/build/buy-button/index.js', $fbp_buy_button_asset_file['dependencies'], $fbp_buy_button_asset_file['version'] );
 		wp_enqueue_style( 'buy-button-style', FBP_URL . '/build/buy-button/index.css' );
 
+		wp_localize_script( 'buy-button-script', 'options', array(
+			'public_key' => FSP_PUBLIC_KEY,
+		) );
+
 		// Make the blocks translatable.
 		if ( function_exists( 'wp_set_script_translations' ) ) {
 			wp_set_script_translations( 'buy-button-script', 'freemius-blocks', FBP_PATH . '/languages' );
@@ -106,24 +110,28 @@ class Blocks {
 		?>
         <div class="freemius-toggle">
             <div class="wp-block-button is-style-fill">
-                <button class="freemius-toggle__option wp-block-button__link" id="<?php echo esc_html( $attributes['plan_a'] ); ?>">Annual</button>
+                <button class="freemius-toggle__option wp-block-button__link"
+                        id="<?php echo esc_html( $attributes['plan_a'] ); ?>">Annual
+                </button>
             </div>
 
             <div class="wp-block-button is-style-outline">
-                <button class="freemius-toggle__option wp-block-button__link" id="<?php echo esc_html( $attributes['plan_b'] ); ?>">Lifetime</button>
+                <button class="freemius-toggle__option wp-block-button__link"
+                        id="<?php echo esc_html( $attributes['plan_b'] ); ?>">Lifetime
+                </button>
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
         <script>
-            jQuery(document).ready(function( $ ) {
+            jQuery(document).ready(function ($) {
                 $(".<?php echo esc_html( $attributes['plan_b'] ); ?>").hide();
 
-                $( "#<?php echo esc_html( $attributes['plan_a'] ); ?>" ).on( "click", function() {
+                $("#<?php echo esc_html( $attributes['plan_a'] ); ?>").on("click", function () {
                     $(".<?php echo esc_html( $attributes['plan_a'] ); ?>").show();
                     $(".<?php echo esc_html( $attributes['plan_b'] ); ?>").hide();
                 });
 
-                $( "#<?php echo esc_html( $attributes['plan_b'] ); ?>" ).on( "click", function() {
+                $("#<?php echo esc_html( $attributes['plan_b'] ); ?>").on("click", function () {
                     $(".<?php echo esc_html( $attributes['plan_a'] ); ?>").hide();
                     $(".<?php echo esc_html( $attributes['plan_b'] ); ?>").show();
                 });
@@ -145,22 +153,23 @@ class Blocks {
 		?>
         <p>
             <button class="wp-block-button__link wp-element-button <?php echo esc_html( $attributes['className'] ); ?> freemius-buy-button"
-                    id="freemius-buy-<?php echo esc_html( $attributes['plugin_id'] ); ?>-<?php echo esc_html( $attributes['plan_id'] ); ?>-<?php echo esc_html( $attributes['billing_cycle'] ); ?>">
+                    id="freemius-buy-<?php echo esc_html( $attributes['plugin_id'] ); ?>-<?php echo esc_html( $attributes['plan_id'] ); ?>-<?php echo esc_html( $attributes['billing_cycle'] ); ?>-<?php echo esc_html( $attributes['quantity'] ); ?>">
 				<?php echo esc_html( $attributes['buttonLabel'] ); ?>
             </button>
         </p>
         <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
         <script src="https://checkout.freemius.com/checkout.min.js"></script>
         <script>
-            let handler = FS.Checkout.configure({
+            let handler_<?php echo esc_html( $attributes['plugin_id'] ); ?>_<?php echo esc_html( $attributes['plan_id'] ); ?>_<?php echo esc_html( $attributes['billing_cycle'] ); ?>_<?php echo esc_html( $attributes['quantity'] ); ?> = FS.Checkout.configure({
                 plugin_id: '<?php echo esc_html( $attributes['plugin_id'] ); ?>',
                 plan_id: '<?php echo esc_html( $attributes['plan_id'] ); ?>',
-                public_key: '<?php echo esc_html( $attributes['public_key'] ); ?>',
+                public_key: '<?php echo esc_html( FSP_PUBLIC_KEY ); ?>',
             });
 
-            $('#freemius-buy-<?php echo esc_html( $attributes['plugin_id'] ); ?>-<?php echo esc_html( $attributes['plan_id'] ); ?>-<?php echo esc_html( $attributes['billing_cycle'] ); ?>').on('click', function (e) {
-                handler.open({
-                    name: 'Passster',
+            $('#freemius-buy-<?php echo esc_html( $attributes['plugin_id'] ); ?>-<?php echo esc_html( $attributes['plan_id'] ); ?>-<?php echo esc_html( $attributes['billing_cycle'] ); ?>-<?php echo esc_html( $attributes['quantity'] ); ?>').on('click', function (e) {
+                handler_<?php echo esc_html( $attributes['plugin_id'] ); ?>_<?php echo esc_html( $attributes['plan_id'] ); ?>_<?php echo esc_html( $attributes['billing_cycle'] ); ?>_<?php echo esc_html( $attributes['quantity'] ); ?>.open({
+                    title: '<?php echo esc_html( $attributes['plugin_name'] ); ?>',
+                    licenses: <?php echo esc_attr( $attributes['quantity'] ); ?>,
                     billing_cycle: '<?php echo esc_html( $attributes['billing_cycle'] ); ?>',
                 });
                 e.preventDefault();

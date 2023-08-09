@@ -7,10 +7,10 @@ const {__} = wp.i18n;
 
 export default function Edit({attributes, setAttributes}) {
     const blockProps = useBlockProps();
-    const {public_key, plugin_id, plan_id, billing_cycle, buttonLabel} = attributes;
+    const {plugin_name, plugin_id, plan_id, quantity, billing_cycle, buttonLabel} = attributes;
 
-    const onChangePublicKey = (newPublicKey) => {
-        setAttributes({public_key: newPublicKey});
+    const onChangePluginName = (newName) => {
+        setAttributes({plugin_name: newName});
     };
 
     const onChangePluginId = (newPluginId) => {
@@ -19,6 +19,10 @@ export default function Edit({attributes, setAttributes}) {
 
     const onChangePlanId = (newPlanId) => {
         setAttributes({plan_id: newPlanId});
+    };
+
+    const onChangeQty = (newQty) => {
+        setAttributes({quantity: newQty});
     };
 
     const onChangeBillingCycle = (newBillingCycle) => {
@@ -41,10 +45,10 @@ export default function Edit({attributes, setAttributes}) {
                 <PanelBody title={__('SDK Settings', 'freemius-blocks')} initialOpen={true}>
                     <TextControl
                         {...blockProps}
-                        label={__('Public Key', 'freemius-blocks')}
-                        onChange={onChangePublicKey}
-                        value={public_key}
-                        id="freemius-public-key"
+                        label={__('Plugin Name', 'freemius-blocks')}
+                        onChange={onChangePluginName}
+                        value={plugin_name}
+                        id="freemius-plugin-name"
                     />
                     <TextControl
                         {...blockProps}
@@ -61,6 +65,14 @@ export default function Edit({attributes, setAttributes}) {
                         type="number"
                         value={plan_id}
                         id="freemius-plan-id"
+                    />
+                    <TextControl
+                        {...blockProps}
+                        label={__('Quantity', 'freemius-blocks')}
+                        onChange={onChangeQty}
+                        type="number"
+                        value={quantity}
+                        id="freemius-qty"
                     />
                     <SelectControl
                         label={__('Billing Cycle', 'freemius-blocks')}
@@ -82,8 +94,8 @@ export default function Edit({attributes, setAttributes}) {
                 </PanelBody>
             </InspectorControls>
             <div {...useBlockProps()}>
-                {plugin_id && plan_id && billing_cycle && public_key ?
-                    <Button variant="primary" id={`ps-${plugin_id}-${plan_id}-${billing_cycle}`} className="freemius-buy-button">
+                {plugin_id && plan_id && billing_cycle && options.public_key ?
+                    <Button variant="primary" id={`ps-${plugin_name}-${plugin_id}-${plan_id}-${billing_cycle}-${quantity}`} className="freemius-buy-button">
                         {buttonLabel}
                     </Button>
                     :

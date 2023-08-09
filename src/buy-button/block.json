@@ -11,7 +11,7 @@
     "html": false
   },
   "attributes": {
-    "public_key": {
+    "plugin_name": {
       "type": "string"
     },
     "plugin_id": {
@@ -19,6 +19,10 @@
     },
     "plan_id": {
       "type": "string"
+    },
+    "quantity": {
+      "type": "string",
+      "default" : 1
     },
     "billing_cycle": {
       "type": "string"
