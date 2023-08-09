@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "freemius-blocks/toggle-plan",
+  "version": "0.5.0",
+  "title": "Freemius Plan Toggle",
+  "category": "text",
+  "icon": "flag",
+  "description": "Add a Freemius plan toggle",
+  "supports": {
+    "align": [
+      "full",
+      "wide"
+    ]
+  },
+  "attributes": {
+    "plan_a": {
+      "type": "string"
+    },
+    "plan_b": {
+      "type": "string"
+    }
+  },
+  "textdomain": "freemius-blocks",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.scss",
+  "style": "file:./style.scss"
+}

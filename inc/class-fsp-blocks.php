@@ -41,9 +41,14 @@ class Blocks {
 	 * @return void
 	 */
 	public function register_blocks(): void {
-		// Register the block.
+		// Register the buy button block.
 		register_block_type( FBP_PATH . '/build/buy-button', array(
 			'render_callback' => array( $this, 'render_buy_button' ),
+		) );
+
+		// Register the toggle plan block.
+		register_block_type( FBP_PATH . '/build/toggle-plan', array(
+			'render_callback' => array( $this, 'render_toggle_plan' ),
 		) );
 	}
 
@@ -56,6 +61,10 @@ class Blocks {
 		// Buy Button Block
 		$fbp_buy_button_asset_file = include( FBP_PATH . '/build/buy-button/index.asset.php' );
 		wp_register_script( 'buy-button-script', FBP_URL . '/build/buy-button/index.js', $fbp_buy_button_asset_file['dependencies'], $fbp_buy_button_asset_file['version'] );
+
+		// Pricing Table Block
+		$fbp_toggle_plan_asset_file = include( FBP_PATH . '/build/toggle-plan/index.asset.php' );
+		wp_register_script( 'toggle-plan-script', FBP_URL . '/build/toggle-plan/index.js', $fbp_toggle_plan_asset_file['dependencies'], $fbp_toggle_plan_asset_file['version'] );
 	}
 
 	/**
@@ -64,6 +73,7 @@ class Blocks {
 	 * @return void
 	 */
 	function add_block_editor_assets(): void {
+		// Buy button block
 		$fbp_buy_button_asset_file = include( FBP_PATH . '/build/buy-button/index.asset.php' );
 
 		wp_enqueue_script( 'buy-button-script', FBP_URL . '/build/buy-button/index.js', $fbp_buy_button_asset_file['dependencies'], $fbp_buy_button_asset_file['version'] );
@@ -73,10 +83,54 @@ class Blocks {
 		if ( function_exists( 'wp_set_script_translations' ) ) {
 			wp_set_script_translations( 'buy-button-script', 'freemius-blocks', FBP_PATH . '/languages' );
 		}
+
+		// Toggle plan block
+		$fbp_toggle_plan_asset_file = include( FBP_PATH . '/build/toggle-plan/index.asset.php' );
+
+		wp_enqueue_script( 'toggle-plan-script', FBP_URL . '/build/toggle-plan/index.js', $fbp_toggle_plan_asset_file['dependencies'], $fbp_toggle_plan_asset_file['version'] );
+		wp_enqueue_style( 'toggle-plan-style', FBP_URL . '/build/toggle-plan/index.css' );
+
+		// Make the blocks translatable.
+		if ( function_exists( 'wp_set_script_translations' ) ) {
+			wp_set_script_translations( 'toggle-plan-script', 'freemius-blocks', FBP_PATH . '/languages' );
+		}
 	}
 
 	function add_block_frontend_styles(): void {
 		wp_enqueue_style( 'buy-button-style', FBP_URL . '/build/buy-button/index.css' );
+		wp_enqueue_style( 'toggle-plan-style', FBP_URL . '/build/toggle-plan/index.css' );
+	}
+
+	public function render_toggle_plan( $attributes ): string {
+		ob_start();
+		?>
+        <div class="freemius-toggle">
+            <div class="wp-block-button is-style-fill">
+                <button class="freemius-toggle__option wp-block-button__link" id="<?php echo esc_html( $attributes['plan_a'] ); ?>">Annual</button>
+            </div>
+
+            <div class="wp-block-button is-style-outline">
+                <button class="freemius-toggle__option wp-block-button__link" id="<?php echo esc_html( $attributes['plan_b'] ); ?>">Lifetime</button>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <script>
+            jQuery(document).ready(function( $ ) {
+                $(".<?php echo esc_html( $attributes['plan_b'] ); ?>").hide();
+
+                $( "#<?php echo esc_html( $attributes['plan_a'] ); ?>" ).on( "click", function() {
+                    $(".<?php echo esc_html( $attributes['plan_a'] ); ?>").show();
+                    $(".<?php echo esc_html( $attributes['plan_b'] ); ?>").hide();
+                });
+
+                $( "#<?php echo esc_html( $attributes['plan_b'] ); ?>" ).on( "click", function() {
+                    $(".<?php echo esc_html( $attributes['plan_a'] ); ?>").hide();
+                    $(".<?php echo esc_html( $attributes['plan_b'] ); ?>").show();
+                });
+            });
+        </script>
+		<?php
+		return ob_get_clean();
 	}
 
 	/**
@@ -90,7 +144,7 @@ class Blocks {
 		ob_start();
 		?>
         <p>
-            <button class="wp-block-button__link wp-element-button <?php echo esc_html( $attributes['className'] ); ?>"
+            <button class="wp-block-button__link wp-element-button <?php echo esc_html( $attributes['className'] ); ?> freemius-buy-button"
                     id="freemius-buy-<?php echo esc_html( $attributes['plugin_id'] ); ?>-<?php echo esc_html( $attributes['plan_id'] ); ?>-<?php echo esc_html( $attributes['billing_cycle'] ); ?>">
 				<?php echo esc_html( $attributes['buttonLabel'] ); ?>
             </button>
