@@ -109,14 +109,13 @@ class Blocks {
 		ob_start();
 		?>
         <div class="freemius-toggle">
-            <div class="wp-block-button is-style-fill">
+            <div class="wp-block-button">
                 <button class="freemius-toggle__option wp-block-button__link"
                         id="<?php echo esc_html( $attributes['plan_a'] ); ?>">Annual
                 </button>
             </div>
-
-            <div class="wp-block-button is-style-outline">
-                <button class="freemius-toggle__option wp-block-button__link"
+            <div class="wp-block-button">
+                <button class="freemius-toggle__option wp-block-button__link is-style-outline"
                         id="<?php echo esc_html( $attributes['plan_b'] ); ?>">Lifetime
                 </button>
             </div>
@@ -127,13 +126,24 @@ class Blocks {
                 $(".<?php echo esc_html( $attributes['plan_b'] ); ?>").hide();
 
                 $("#<?php echo esc_html( $attributes['plan_a'] ); ?>").on("click", function () {
+                    // Show pricing related elements.
                     $(".<?php echo esc_html( $attributes['plan_a'] ); ?>").show();
                     $(".<?php echo esc_html( $attributes['plan_b'] ); ?>").hide();
+
+                    // Toggle button state.
+                    $(this).removeClass('is-style-outline');
+                    $("#<?php echo esc_html( $attributes['plan_b'] ); ?>").addClass('is-style-outline');
                 });
 
                 $("#<?php echo esc_html( $attributes['plan_b'] ); ?>").on("click", function () {
+                    // Show pricing related elements.
                     $(".<?php echo esc_html( $attributes['plan_a'] ); ?>").hide();
                     $(".<?php echo esc_html( $attributes['plan_b'] ); ?>").show();
+
+                    // Toggle button state.
+                    $(this).removeClass('is-style-outline');
+                    $("#<?php echo esc_html( $attributes['plan_a'] ); ?>").addClass('is-style-outline');
+
                 });
             });
         </script>

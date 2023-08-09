@@ -4,14 +4,15 @@
   justify-content: center;
 
   button {
-    margin:5px;
+    margin: 2.5px;
   }
 
   button:hover {
     text-decoration: none !important
   }
 
-  .is-style-outline button.freemius-toggle__option.wp-block-button__link {
-    padding: 0.5em 1em;
+  .freemius-toggle__option {
+    border: 2px solid;
+    padding: 10px 15px !important;
   }
 }
