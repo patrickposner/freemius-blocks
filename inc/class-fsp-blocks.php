@@ -58,6 +58,10 @@ class Blocks {
 	 * @return void
 	 */
 	public function register_scripts(): void {
+		if ( ! defined( 'FSP_PUBLIC_KEY' ) ) {
+			return;
+		}
+
 		// Buy Button Block
 		$fbp_buy_button_asset_file = include( FBP_PATH . '/build/buy-button/index.asset.php' );
 		wp_register_script( 'buy-button-script', FBP_URL . '/build/buy-button/index.js', $fbp_buy_button_asset_file['dependencies'], $fbp_buy_button_asset_file['version'] );
@@ -73,6 +77,10 @@ class Blocks {
 	 * @return void
 	 */
 	function add_block_editor_assets(): void {
+		if ( ! defined( 'FSP_PUBLIC_KEY' ) ) {
+			return;
+		}
+
 		// Buy button block
 		$fbp_buy_button_asset_file = include( FBP_PATH . '/build/buy-button/index.asset.php' );
 
@@ -160,6 +168,10 @@ class Blocks {
 	 */
 	public function render_buy_button( $attributes ): string {
 		ob_start();
+
+		if ( ! defined( 'FSP_PUBLIC_KEY' ) ) {
+			return '';
+		}
 		?>
         <p>
             <button class="wp-block-button__link wp-element-button <?php echo esc_html( $attributes['className'] ); ?> freemius-buy-button"
