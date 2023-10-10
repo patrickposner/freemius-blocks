@@ -128,7 +128,6 @@ class Blocks {
                 </button>
             </div>
         </div>
-        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
         <script>
             jQuery(document).ready(function ($) {
                 $(".<?php echo esc_html( $attributes['plan_b'] ); ?>").hide();
@@ -174,27 +173,28 @@ class Blocks {
 		}
 		?>
         <p>
-            <button class="wp-block-button__link wp-element-button <?php echo esc_html( $attributes['className'] ); ?> freemius-buy-button"
+            <button class="wp-block-button__link wp-element-button freemius-buy-button"
                     id="freemius-buy-<?php echo esc_html( $attributes['plugin_id'] ); ?>-<?php echo esc_html( $attributes['plan_id'] ); ?>-<?php echo esc_html( $attributes['billing_cycle'] ); ?>-<?php echo esc_html( $attributes['quantity'] ); ?>">
 				<?php echo esc_html( $attributes['buttonLabel'] ); ?>
             </button>
         </p>
-        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
         <script src="https://checkout.freemius.com/checkout.min.js"></script>
         <script>
-            let handler_<?php echo esc_html( $attributes['plugin_id'] ); ?>_<?php echo esc_html( $attributes['plan_id'] ); ?>_<?php echo esc_html( $attributes['billing_cycle'] ); ?>_<?php echo esc_html( $attributes['quantity'] ); ?> = FS.Checkout.configure({
-                plugin_id: '<?php echo esc_html( $attributes['plugin_id'] ); ?>',
-                plan_id: '<?php echo esc_html( $attributes['plan_id'] ); ?>',
-                public_key: '<?php echo esc_html( FSP_PUBLIC_KEY ); ?>',
-            });
-
-            $('#freemius-buy-<?php echo esc_html( $attributes['plugin_id'] ); ?>-<?php echo esc_html( $attributes['plan_id'] ); ?>-<?php echo esc_html( $attributes['billing_cycle'] ); ?>-<?php echo esc_html( $attributes['quantity'] ); ?>').on('click', function (e) {
-                handler_<?php echo esc_html( $attributes['plugin_id'] ); ?>_<?php echo esc_html( $attributes['plan_id'] ); ?>_<?php echo esc_html( $attributes['billing_cycle'] ); ?>_<?php echo esc_html( $attributes['quantity'] ); ?>.open({
-                    title: '<?php echo esc_html( $attributes['plugin_name'] ); ?>',
-                    licenses: <?php echo esc_attr( $attributes['quantity'] ); ?>,
-                    billing_cycle: '<?php echo esc_html( $attributes['billing_cycle'] ); ?>',
+            jQuery(document).ready(function ($) {
+                let handler_<?php echo esc_html( $attributes['plugin_id'] ); ?>_<?php echo esc_html( $attributes['plan_id'] ); ?>_<?php echo esc_html( $attributes['billing_cycle'] ); ?>_<?php echo esc_html( $attributes['quantity'] ); ?> = FS.Checkout.configure({
+                    plugin_id: '<?php echo esc_html( $attributes['plugin_id'] ); ?>',
+                    plan_id: '<?php echo esc_html( $attributes['plan_id'] ); ?>',
+                    public_key: '<?php echo esc_html( FSP_PUBLIC_KEY ); ?>',
                 });
-                e.preventDefault();
+
+                $('#freemius-buy-<?php echo esc_html( $attributes['plugin_id'] ); ?>-<?php echo esc_html( $attributes['plan_id'] ); ?>-<?php echo esc_html( $attributes['billing_cycle'] ); ?>-<?php echo esc_html( $attributes['quantity'] ); ?>').on('click', function (e) {
+                    handler_<?php echo esc_html( $attributes['plugin_id'] ); ?>_<?php echo esc_html( $attributes['plan_id'] ); ?>_<?php echo esc_html( $attributes['billing_cycle'] ); ?>_<?php echo esc_html( $attributes['quantity'] ); ?>.open({
+                        title: '<?php echo esc_html( $attributes['plugin_name'] ); ?>',
+                        licenses: <?php echo esc_attr( $attributes['quantity'] ); ?>,
+                        billing_cycle: '<?php echo esc_html( $attributes['billing_cycle'] ); ?>',
+                    });
+                    e.preventDefault();
+                });
             });
         </script>
 		<?php
