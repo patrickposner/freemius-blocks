@@ -117,10 +117,6 @@ export default function Edit({attributes, setAttributes}) {
                 {plugin_id && plan_id && billing_cycle && options.public_key ?
                     <>
                         <span className={"freemius-price-value"}>{currency}{price}</span>
-                        <span className={"freemius-interval"}>/ {billing_cycle}</span>
-                        <p className={"freemius-short-description"}>An awesome WordPress plugin to handle amazing
-                            features.</p>
-                        <span className={"freemius-price-value"}>{currency}{price}</span>
                         <span className={"freemius-interval"}>
                             {billing_cycle === 'lifetime' ? ' One-time payment' : ''}
                             {billing_cycle === 'annual' ? ' per year' : ''}
