@@ -2,7 +2,7 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "freemius-blocks/quantity-select-button",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "title": "Freemius Quantity Select Button",
   "category": "text",
   "icon": "flag",

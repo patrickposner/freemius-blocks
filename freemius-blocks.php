@@ -3,7 +3,7 @@
  * Plugin Name:       Freemius Blocks
  * Plugin URI:        https://patrickposner.dev
  * Description:       A powerful block plugin for integrating Freemius.
- * Version:           0.5
+ * Version:           0.6
  * Author:            Patrick Posner
  * Author URI:        https://patrickposner.dev
  * License:           GPL-2.0+
@@ -15,7 +15,7 @@
 
 define( 'FBP_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'FBP_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
-define( 'FBP_VERSION', '0.5' );
+define( 'FBP_VERSION', '0.6' );
 
 add_action( 'plugins_loaded', 'fbp_run_plugin' );
 

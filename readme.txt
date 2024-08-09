@@ -2,16 +2,30 @@
 Contributors: patrickposner
 Tags: Gutenberg, Blocks
 Requires at least: 6.2
-Tested up to: 6.3
-Stable tag: 0.5
+Tested up to: 6.6
+Stable tag: 0.6
 
 == Description ==
 
 Freemius Blocks - a collection of blocks to add Freemius to your website.
 
-Add your Freemius Public Key as a constant iny our wp-config.php file and start using the blocks:
+Add your Freemius Public Key as a constant in your wp-config.php file and start using the blocks:
 
 define('FSP_PUBLIC_KEY', 'pk_XXX');
+
+This plugin provides three blocks to add Freemius to your website:
+
+1. Freemius Button
+
+A simple button that opens the Freemius checkout modal with the given plan, quantity and additional arguments.
+
+2. Freemius Quantity Select Combo Box
+
+A combo box to select the quantity of a plan, which updates the price accordingly + a button to open the Freemius checkout modal + a description for the plugin.
+
+3. Freemius Price Toggle
+
+A simple toggle implementation to switch out group blocks in the block editor with different pricing plans. It's useful if you want to add a toggle switch for annual and lifetime plans.
 
 == Installation ==
 
@@ -41,6 +55,13 @@ define('FSP_PUBLIC_KEY', 'pk_XXX');
 
 
 == Changelog ==
+
+= 0.6 =
+
+* added quantity select combobox block
+* updated all dependencies to the latest versions
+* compatibility with WordPress 6.6
+* some code impprovements for better performance
 
 = 0.5 =
 
