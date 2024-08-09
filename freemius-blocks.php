@@ -30,8 +30,10 @@ if ( ! function_exists( 'fbp_run_plugin' ) ) {
 	 */
 	function fbp_run_plugin(): void {
 		require_once( FBP_PATH . '/inc/class-fsp-blocks.php' );
+		require_once( FBP_PATH . '/inc/class-fsp-meta.php' );
 
 		fsp\Blocks::get_instance();
+		fsp\Meta::get_instance();
 
 		// Localize the plugin.
 		$textdomain_dir = plugin_basename( dirname( __FILE__ ) ) . '/languages';

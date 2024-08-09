@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "freemius-blocks/quantity-select-button",
+  "version": "0.5.0",
+  "title": "Freemius Quantity Select Button",
+  "category": "text",
+  "icon": "flag",
+  "description": "Add a Freemius Quantity Select Button",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "plugin_name": {
+      "type": "string"
+    },
+    "plugin_id": {
+      "type": "string"
+    },
+    "plan_id": {
+      "type": "string"
+    },
+    "currency": {
+      "type": "string",
+      "default": "$"
+    },
+    "description": {
+      "type": "string",
+      "default": "An awesome WordPress plugin to handle amazing features."
+    },
+    "billing_cycle": {
+      "type": "string",
+      "default": "annual"
+    },
+    "buttonLabel": {
+      "type": "string"
+    }
+  },
+  "textdomain": "freemius-blocks",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.scss",
+  "style": "file:./style.scss"
+}

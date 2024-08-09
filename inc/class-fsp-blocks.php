@@ -46,6 +46,11 @@ class Blocks {
 			'render_callback' => array( $this, 'render_buy_button' ),
 		) );
 
+		// Register the buy button block.
+		register_block_type( FBP_PATH . '/build/quantity-select-button', array(
+			'render_callback' => array( $this, 'render_qty_select_button' ),
+		) );
+
 		// Register the toggle plan block.
 		register_block_type( FBP_PATH . '/build/toggle-plan', array(
 			'render_callback' => array( $this, 'render_toggle_plan' ),
@@ -65,6 +70,11 @@ class Blocks {
 		// Buy Button Block
 		$fbp_buy_button_asset_file = include( FBP_PATH . '/build/buy-button/index.asset.php' );
 		wp_register_script( 'buy-button-script', FBP_URL . '/build/buy-button/index.js', $fbp_buy_button_asset_file['dependencies'], $fbp_buy_button_asset_file['version'] );
+
+		// Quantity Select Button Block
+		$fbp_qty_button_asset_file = include( FBP_PATH . '/build/quantity-select-button/index.asset.php' );
+		wp_register_script( 'quantity-select-button-script', FBP_URL . '/build/quantity-select-button/index.js', $fbp_qty_button_asset_file['dependencies'], $fbp_qty_button_asset_file['version'] );
+
 
 		// Pricing Table Block
 		$fbp_toggle_plan_asset_file = include( FBP_PATH . '/build/toggle-plan/index.asset.php' );
@@ -96,6 +106,22 @@ class Blocks {
 			wp_set_script_translations( 'buy-button-script', 'freemius-blocks', FBP_PATH . '/languages' );
 		}
 
+		// Quantity Select button block
+		$fbp_qty_button_asset_file = include( FBP_PATH . '/build/quantity-select-button/index.asset.php' );
+
+		wp_enqueue_script( 'quantity-select-button-script', FBP_URL . '/build/quantity-select-button/index.js', $fbp_qty_button_asset_file['dependencies'], $fbp_qty_button_asset_file['version'] );
+		wp_enqueue_style( 'quantity-select-button-style', FBP_URL . '/build/quantity-select-button/index.css' );
+
+		wp_localize_script( 'quantity-select-button-script', 'options', array(
+			'public_key' => FSP_PUBLIC_KEY,
+		) );
+
+		// Make the blocks translatable.
+		if ( function_exists( 'wp_set_script_translations' ) ) {
+			wp_set_script_translations( 'quantity-select-button-script', 'freemius-blocks', FBP_PATH . '/languages' );
+		}
+
+
 		// Toggle plan block
 		$fbp_toggle_plan_asset_file = include( FBP_PATH . '/build/toggle-plan/index.asset.php' );
 
@@ -110,6 +136,7 @@ class Blocks {
 
 	function add_block_frontend_styles(): void {
 		wp_enqueue_style( 'buy-button-style', FBP_URL . '/build/buy-button/index.css' );
+		wp_enqueue_style( 'quantity-select-button-style', FBP_URL . '/build/quantity-select-button/index.css' );
 		wp_enqueue_style( 'toggle-plan-style', FBP_URL . '/build/toggle-plan/index.css' );
 	}
 
@@ -166,6 +193,49 @@ class Blocks {
 	 * @return string
 	 */
 	public function render_buy_button( $attributes ): string {
+		ob_start();
+
+		if ( ! defined( 'FSP_PUBLIC_KEY' ) ) {
+			return '';
+		}
+		?>
+        <p>
+            <button class="wp-block-button__link wp-element-button freemius-buy-button"
+                    id="freemius-buy-<?php echo esc_html( $attributes['plugin_id'] ); ?>-<?php echo esc_html( $attributes['plan_id'] ); ?>-<?php echo esc_html( $attributes['billing_cycle'] ); ?>-<?php echo esc_html( $attributes['quantity'] ); ?>">
+				<?php echo esc_html( $attributes['buttonLabel'] ); ?>
+            </button>
+        </p>
+        <script src="https://checkout.freemius.com/checkout.min.js"></script>
+        <script>
+            jQuery(document).ready(function ($) {
+                let handler_<?php echo esc_html( $attributes['plugin_id'] ); ?>_<?php echo esc_html( $attributes['plan_id'] ); ?>_<?php echo esc_html( $attributes['billing_cycle'] ); ?>_<?php echo esc_html( $attributes['quantity'] ); ?> = FS.Checkout.configure({
+                    plugin_id: '<?php echo esc_html( $attributes['plugin_id'] ); ?>',
+                    plan_id: '<?php echo esc_html( $attributes['plan_id'] ); ?>',
+                    public_key: '<?php echo esc_html( FSP_PUBLIC_KEY ); ?>',
+                });
+
+                $('#freemius-buy-<?php echo esc_html( $attributes['plugin_id'] ); ?>-<?php echo esc_html( $attributes['plan_id'] ); ?>-<?php echo esc_html( $attributes['billing_cycle'] ); ?>-<?php echo esc_html( $attributes['quantity'] ); ?>').on('click', function (e) {
+                    handler_<?php echo esc_html( $attributes['plugin_id'] ); ?>_<?php echo esc_html( $attributes['plan_id'] ); ?>_<?php echo esc_html( $attributes['billing_cycle'] ); ?>_<?php echo esc_html( $attributes['quantity'] ); ?>.open({
+                        title: '<?php echo esc_html( $attributes['plugin_name'] ); ?>',
+                        licenses: <?php echo esc_attr( $attributes['quantity'] ); ?>,
+                        billing_cycle: '<?php echo esc_html( $attributes['billing_cycle'] ); ?>',
+                    });
+                    e.preventDefault();
+                });
+            });
+        </script>
+		<?php
+		return ob_get_clean();
+	}
+
+	/**
+	 * Server-Side render for Freemius quantity select button.
+	 *
+	 * @param $attributes
+	 *
+	 * @return string
+	 */
+	public function render_qty_select_button( $attributes ): string {
 		ob_start();
 
 		if ( ! defined( 'FSP_PUBLIC_KEY' ) ) {
