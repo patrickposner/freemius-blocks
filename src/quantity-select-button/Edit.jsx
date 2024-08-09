@@ -16,7 +16,7 @@ export default function Edit({attributes, setAttributes}) {
     const getPricingPlans = () => {
         let pricingPlans = wp.data.select('core/editor').getEditedPostAttribute('meta').freemius_quantity;
 
-        if (pricingPlans) {
+        if (pricingPlans.length > 0 ) {
             setPricingPlans(pricingPlans);
 
             let plan = pricingPlans.find(element => element.label == 1);
