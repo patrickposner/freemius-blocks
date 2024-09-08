@@ -291,7 +291,9 @@ class Blocks {
                 background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
             }
         </style>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         <script src="https://checkout.freemius.com/checkout.min.js"></script>
+
         <script>
             jQuery(document).ready(function ($) {
                 let price = <?php echo esc_html( $pricing_plans[0]['value'] ); ?>;
@@ -300,7 +302,10 @@ class Blocks {
                 // Swap price and qunaity based on the selected plan.
                 $('.freemius-pricing-plan-select').on('change', function () {
                     price = $(this).val();
-                    $('.freemius-price-raw-value').text(price);
+
+                    if (price > 0) {
+                        $('.freemius-price-raw-value').text(price);
+                    }
 
                     quantity = $(this).find('option:selected').text();
                 });
