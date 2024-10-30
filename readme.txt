@@ -2,8 +2,8 @@
 Contributors: patrickposner
 Tags: Gutenberg, Blocks
 Requires at least: 6.2
-Tested up to: 6.6
-Stable tag: 0.6
+Tested up to: 6.7
+Stable tag: 0.7
 
 == Description ==
 
@@ -55,6 +55,10 @@ A simple toggle implementation to switch out group blocks in the block editor wi
 
 
 == Changelog ==
+
+= 0.7 =
+
+* new JS SDK for buy button block
 
 = 0.6 =
 
